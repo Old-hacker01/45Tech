@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports TV Streaming Platform</title>
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --background-dark: #121212;
+            --surface-color: #1E1E1E;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: var(--background-dark);
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .channel-list {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            padding: 15px;
+            height: 80vh;
+            overflow-y: auto;
+        }
+
+        .channel-item {
+            padding: 15px;
+            margin: 8px 0;
+            background-color: #2A2A2A;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .channel-item:hover {
+            background-color: #363636;
+            transform: translateX(5px);
+        }
+
+        .video-container {
+            background-color: #000;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        #video-player {
+            width: 100%;
+            height: 70vh;
+            border-radius: 12px;
+        }
+
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 20px;
+            display: none;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            background-color: var(--surface-color);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        #quality-selector {
+            background: #333;
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            border: none;
+        }
+
+        .error-message {
+            color: #ff4444;
+            padding: 15px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .channel-list {
+                height: auto;
+            }
+            
+            #video-player {
+                height: 50vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Live Sports Streaming</h1>
+    <div class="container">
+        <div class="channel-list" id="channel-list">
+            <div class="channel-item" data-src="https://134630.global.ssl.fastly.net/5fe35eae8c53540cab83659a/live_0a6ef900ad0511ed8f65a940024f638d/index.m3u8">
+                <span>▶️</span>
+                <div>
+                    <h3>Azam TWP</h3>
+                    <p>Live Sports Channel</p>
+                </div>
+            </div>
+            <div class="channel-item" data-src="https://live-hls-abr-cdn.livepush.io/live/bigbuckbunnyclip/index.m3u8">
+                <span>▶️</span>
+                <div>
+                    <h3>Azam Sports 1</h3>
+                    <p>Premium Sports Content</p>
+                </div>
+            </div>
+            <div class="channel-item" data-src="https://live-hls-abr-cdn.livepush.io/live/bigbuckbunnyclip/index.mpd">
+                <span>▶️</span>
+                <div>
+                    <h3>Azam Sports 1</h3>
+                    <p>Premium Sports Content</p>
+                </div>
+            </div>
+            <div class="channel-item" data-src="STREAM_URL_2">
+                <span>▶️</span>
+                <div>
+                    <h3>Azam Sports 1</h3>
+                    <p>Premium Sports Content</p>
+                </div>
+            </div>
+            <div class="channel-item" data-src="STREAM_URL_2">
+                <span>▶️</span>
+                <div>
+                    <h3>Azam Sports 1</h3>
+                    <p>Premium Sports Content</p>
+                </div>
+            </div>
+            <!-- Add more channels following the same pattern -->
+        </div>
+        
+        <div class="video-container">
+            <div class="loader">Loading Stream...</div>
+            <video id="video-player" controls></video>
+            <div class="error-message" id="error-message"></div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <select id="quality-selector" disabled>
+            <option>Select Quality</option>
+        </select>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        let hls;
+        let currentStream = null;
+        const MAX_RETRIES = 3;
+        let retryCount = 0;
+
+        const videoPlayer = document.getElementById('video-player');
+        const channelItems = document.querySelectorAll('.channel-item');
+        const qualitySelector = document.getElementById('quality-selector');
+        const loader = document.querySelector('.loader');
+        const errorMessage = document.getElementById('error-message');
+
+        function showLoader() {
+            loader.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        function hideLoader() {
+            loader.style.display = 'none';
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            hideLoader();
+        }
+
+        function destroyPlayer() {
+            if (hls) {
+                hls.destroy();
+                hls = null;
+            }
+            videoPlayer.src = '';
+        }
+
+        function loadStream(streamUrl) {
+            destroyPlayer();
+            showLoader();
+
+            if (Hls.isSupported()) {
+                hls = new Hls({
+                    maxBufferLength: 30,
+                    maxMaxBufferLength: 60,
+                    capLevelToPlayerSize: true
+                });
+
+                hls.loadSource(streamUrl);
+                hls.attachMedia(videoPlayer);
+
+                hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                    qualitySelector.innerHTML = '<option>Select Quality</option>';
+                    hls.levels.forEach((level, index) => {
+                        const option = document.createElement('option');
+                        option.value = index;
+                        option.text = `${level.height}p (${Math.round(level.bitrate/1000)}kbps)`;
+                        qualitySelector.appendChild(option);
+                    });
+                    qualitySelector.disabled = false;
+                    hideLoader();
+                });
+
+                hls.on(Hls.Events.ERROR, (event, data) => {
+                    console.error('HLS Error:', data);
+                    if (data.fatal) {
+                        switch(data.type) {
+                            case Hls.ErrorTypes.NETWORK_ERROR:
+                                if (retryCount < MAX_RETRIES) {
+                                    retryCount++;
+                                    hls.startLoad();
+                                } else {
+                                    showError('Network Error: Please check your connection');
+                                }
+                                break;
+                            case Hls.ErrorTypes.MEDIA_ERROR:
+                                hls.recoverMediaError();
+                                break;
+                            default:
+                                destroyPlayer();
+                                showError('Stream Error: Please try another channel');
+                                break;
+                        }
+                    }
+                });
+
+            } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+                videoPlayer.src = streamUrl;
+                videoPlayer.addEventListener('loadedmetadata', () => {
+                    hideLoader();
+                    videoPlayer.play();
+                });
+            }
+        }
+
+        // Channel selection handler
+        channelItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (currentStream === item.dataset.src) return;
+                
+                currentStream = item.dataset.src;
+                channelItems.forEach(ch => ch.classList.remove('active'));
+                item.classList.add('active');
+                loadStream(currentStream);
+            });
+        });
+
+        // Quality selection handler
+        qualitySelector.addEventListener('change', () => {
+            if (hls && qualitySelector.value !== 'Select Quality') {
+                hls.currentLevel = parseInt(qualitySelector.value);
+            }
+        });
+
+        // Network status monitoring
+        window.addEventListener('online', () => {
+            if (currentStream && !videoPlayer.src) {
+                loadStream(currentStream);
+            }
+        });
+
+        // Initialize first channel
+        // loadStream('https://live-hls-abr-cdn.livepush.io/live/bigbuckbunnyclip/index.m3u8'); // Uncomment to auto-load first channel
+    </script>
+</body>
+</html>
