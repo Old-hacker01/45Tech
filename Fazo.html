@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>about 45Tech</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .hero {
+            padding: 60px 0;
+            text-align: center;
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .content-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .content-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .content-box h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .content-box p {
+            margin-bottom: 15px;
+        }
+
+        .content-box ul {
+            margin-bottom: 20px;
+            padding-left: 20px;
+        }
+
+        .content-box li {
+            margin-bottom: 10px;
+        }
+
+        .team {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .team-member {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            width: 280px;
+        }
+
+        .team-member img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 5px solid var(--secondary);
+        }
+
+        .team-member h4 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .team-member p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary);
+            color: white;8
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .copyright {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+
+            nav ul {
+                margin-top: 20px;
+            }
+
+            nav ul li {
+                margin-left: 15px;
+                margin-right: 15px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .content-box {
+                padding: 30px 20px;
+            }
+
+            .team-member {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <span>45Tech</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>45Tech - Your Trusted Resource</h1>
+            <p>Learn about our policies and the team behind our platform</p>
+        </div>
+    </section>
+
+    <section class="content-section" id="privacy">
+        <div class="container">
+            <h2 class="section-title">Privacy Policy</h2>
+            
+            <div class="content-box">
+                <h3>Information We Collect</h3>
+                <p>We collect information to provide better services to all our users. The types of information we collect include:</p>
+                <ul>
+                    <li><strong>Personal Information:</strong> When you create an account, we may ask for personal information like your name, email address, and phone number.</li>
+                    <li><strong>Usage Data:</strong> We collect information about how you use our services, such as the books you download and the pages you visit.</li>
+                    <li><strong>Device Information:</strong> We may collect device-specific information such as your hardware model and operating system version.</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>How We Use Information</h3>
+                <p>We use the information we collect to:</p>
+                <ul>
+                    <li>Provide, maintain, and improve our services</li>
+                    <li>Develop new features and functionality</li>
+                    <li>Send you important notices, such as changes to our terms and policies</li>
+                    <li>Detect and prevent fraud and abuse</li>
+                    <li>Personalize your experience</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>Information Sharing</h3>
+                <p>We do not share your personal information with companies, organizations, or individuals outside of Fazo except in the following cases:</p>
+                <ul>
+                    <li><strong>With your consent:</strong> We will share personal information with third parties when we have your consent to do so.</li>
+                    <li><strong>For external processing:</strong> We provide personal information to our affiliates or other trusted businesses to process it for us.</li>
+                    <li><strong>For legal reasons:</strong> We will share personal information if we believe disclosure is necessary to comply with applicable laws.</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>Security</h3>
+                <p>We work hard to protect Fazo and our users from unauthorized access to or unauthorized alteration, disclosure, or destruction of information we hold. In particular:</p>
+                <ul>
+                    <li>We encrypt many of our services using SSL</li>
+                    <li>We review our information collection, storage, and processing practices to prevent unauthorized access</li>
+                    <li>We restrict access to personal information to Fazo employees who need to know that information to process it</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>Changes to This Policy</h3>
+                <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "effective date" at the top of this Privacy Policy.</p>
+                <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section" id="about">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            
+            <div class="content-box">
+                <h3>Our Mission</h3>
+                <p>At 45Tech, we believe that knowledge should be accessible to everyone. Our mission is to provide high-quality educational resources to students, professionals, and lifelong learners around the world.</p>
+                <p>Founded in 2023, Fazo has grown from a small collection of IT notes to a comprehensive platform offering books, study materials, and resources across multiple disciplines.</p>
+            </div>
+
+            <div class="content-box">
+                <h3>What We Offer</h3>
+                <ul>
+                    <li><strong>Comprehensive Library:</strong> Thousands of books and study materials across IT, programming, cybersecurity, and more</li>
+                    <li><strong>Affordable Access:</strong> Low-cost and free resources to make education accessible</li>
+                    <li><strong>Quality Content:</strong> All materials are carefully curated and reviewed by experts</li>
+                    <li><strong>Mobile Friendly:</strong> Access your resources anytime, anywhere</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>Our Team</h3>
+                <p>45Tech is built by a passionate team of educators, technologists, and content creators dedicated to making learning more accessible.</p>
+                
+                <div class="team">
+                    <div class="team-member">
+                        <img src="Fazo28.jpg" alt="Team Member">
+                        <h4>Fadhili mbaga</h4>
+                        <p>Founder & CEO</p>
+                        <div class="social-links">
+                            <a href="www.twitter.com/Fazo28_Tz"><i class="fab fa-twitter"></i></a>
+                            <a href="www.instagram.com/Fazo.28"><i class="fab fa-instagram"></i></a>
+                            <a href="https://wa.me/+255675007732"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <img src="fazo.jpg" alt="Team Member">
+                        <h4>Fadhili mbaga</h4>
+                        <p>Content Director</p>
+                        <div class="social-links">
+                            <a href="www.twitter.com/Fazo28_Tz"><i class="fab fa-twitter"></i></a>
+                            <a href="www.instagram.com/Fazo.28"><i class="fab fa-instagram"></i></a>
+                            <a href="https://wa.me/+255675007732"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <img src="Mrpassword.jpg" alt="Team Member">
+                        <h4>MrpasswordTz</h4>
+                        <p>Lead Developer</p>
+                        <div class="social-links">
+                            <a href="www.twitter.com/mrpasswor_tz"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="https://wa.me/+255652181995"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box" id="contact">
+                <h3>Contact Us</h3>
+                <p>Have questions or feedback? We'd love to hear from you!</p>
+                <ul>
+                    <li><strong>Email:</strong> <a href="mailto:fadhilimbaga99@gmail.com">fadhilimbaga99@gmail.com</a></li>
+                    <li><strong>Phone:</strong><a href="tel:+255622048500">+255 622 048 500</a>
+                    <li><strong>Address:</strong> Kihonda Street, Morogoro, Tanzania</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <p class="copyright">&copy; 2025 45Tech. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
