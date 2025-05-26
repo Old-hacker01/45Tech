@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>45Tech -Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a8a5e6;
+            --dark-bg: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --input-bg: #3d3d3d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 1.5rem;
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .domain-search {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            margin: 20px auto;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        .search-form {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .domain-input {
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--input-bg);
+            color: white;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .login-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .login-container {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            margin: 2rem;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .premium-features {
+            display: none;
+            text-align: center;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--input-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .tiktok-form {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .tiktok-input {
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #4d4d4d;
+            background: var(--card-bg);
+            color: white;
+        }
+
+        .views-selector {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .views-option {
+            background: var(--input-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .views-option.selected {
+            background: var(--primary);
+        }
+
+        .cta-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            nav a {
+                margin: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <div class="logo">45Tech</div>
+            <nav>
+                <a href="#pricing">Pricing</a>
+                <a href="#support">Support</a>
+                <a href="#login" id="loginLink">Login</a>
+            </nav>
+        </nav>
+    </header>
+
+    <div class="domain-search">
+        <form class="search-form" id="domainForm">
+            <input type="text" class="domain-input" placeholder="" required>
+            <button type="submit" class="cta-button"></button>
+        </form>
+        <div class="domain-results" style="display: none;">
+            <h3></h3>
+            <p class="available" style="color: #51cf66; display: none;">
+                <i class="fas fa-check-circle"></i> 
+            </p>
+            <p class="taken" style="color: #ff6b6b; display: none;">
+                <i class="fas fa-times-circle"></i> 
+            </p>
+        </div>
+    </div>
+
+    <section class="login-section" id="login">
+        <div class="login-container">
+            <div class="login-form-container">
+                <h2 class="login-title">TikTok Access</h2>
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <input type="email" class="tiktok-input" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="tiktok-input" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="cta-button">Login</button>
+                </form>
+            </div>
+
+            <div class="premium-features" id="premiumFeatures">
+                <h2>TikTok Growth Services</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Get Free Followers</h3>
+                        <div class="tiktok-form">
+                            <input type="number" class="tiktok-input" 
+                                  placeholder="Number of followers"
+                                  min="100" 
+                                  value="1000">
+                            <button class="cta-button" onclick="getFollowers()">
+                                Get Followers
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Get Video Views</h3>
+                        <div class="tiktok-form">
+                            <input type="url" class="tiktok-input" 
+                                  placeholder="Paste TikTok video URL"
+                                  pattern="https://(www\.|vm\.)?tiktok\.com/.+">
+                            <div class="views-selector">
+                                <div class="views-option selected" data-views="1000">1K</div>
+                                <div class="views-option" data-views="5000">5K</div>
+                                <div class="views-option" data-views="10000">10K</div>
+                            </div>
+                            <button class="cta-button" onclick="getViews()">
+                                Boost Views
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button class="cta-button logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Login System
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            document.querySelector('.login-form-container').style.display = 'none';
+            document.getElementById('premiumFeatures').style.display = 'block';
+        });
+
+        // TikTok Views System
+        let selectedViews = 1000;
+        
+        document.querySelectorAll('.views-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.views-option').forEach(opt => 
+                    opt.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedViews = parseInt(this.dataset.views);
+            });
+        });
+
+        function isValidTikTokUrl(url) {
+            const pattern = /^(https?:\/\/)?(www\.|vm\.)?tiktok\.com\/.+/;
+            return pattern.test(url);
+        }
+
+        function getViews() {
+            const urlInput = document.querySelector('input[type="url"]');
+            if (!isValidTikTokUrl(urlInput.value)) {
+                alert('Please enter a valid TikTok URL!');
+                return;
+            }
+
+            showLoader();
+            setTimeout(() => {
+                hideLoader();
+                showSuccess(`Successfully added ${selectedViews} views to:\n${urlInput.value}`);
+            }, 2000);
+        }
+
+        function getFollowers() {
+            const countInput = document.querySelector('input[type="number"]');
+            if (countInput.value < 100) {
+                alert('Minimum 100 followers required!');
+                return;
+            }
+
+            showLoader();
+            setTimeout(() => {
+                hideLoader();
+                showSuccess(`Success! ${countInput.value} followers added`);
+            }, 2000);
+        }
+
+        function showLoader() {
+            document.body.classList.add('loading');
+        }
+
+        function hideLoader() {
+            document.body.classList.remove('loading');
+        }
+
+        function showSuccess(message) {
+            const alertDiv = document.createElement('div');
+            alertDiv.style.color = '#51cf66';
+            alertDiv.style.margin = '1rem 0';
+            alertDiv.innerHTML = `
+                <i class="fas fa-check-circle"></i> ${message}
+            `;
+            document.querySelector('.feature-grid').prepend(alertDiv);
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+
+        function logout() {
+            document.querySelector('.login-form-container').style.display = 'block';
+            document.getElementById('premiumFeatures').style.display = 'none';
+        }
+
+        // Domain Check Simulation
+        document.getElementById('domainForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const results = document.querySelector('.domain-results');
+            results.style.display = 'block';
+            const available = Math.random() > 0.5;
+            document.querySelector('.available').style.display = available ? 'block' : 'none';
+            document.querySelector('.taken').style.display = !available ? 'block' : 'none';
+        });
+    </script>
+</body>
+</html>
