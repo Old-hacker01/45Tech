@@ -67,7 +67,7 @@
             margin: 1rem 0;
         }
 
-        input {
+        input, select {
             width: 100%;
             padding: 12px;
             margin: 8px 0;
@@ -100,6 +100,7 @@
         .payment-icons img {
             width: 60px;
             margin: 10px;
+            height: auto;
         }
 
         .disclaimer {
@@ -107,6 +108,46 @@
             margin-top: 2rem;
             font-size: 0.9em;
             opacity: 0.8;
+        }
+
+        /* Payment Modal Styles */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .payment-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .payment-content h3 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .payment-content label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .close-modal {
+            background: #ff6b6b;
+            margin-top: 0.5rem;
         }
 
         @media (max-width: 768px) {
@@ -126,12 +167,12 @@
                 <i class="fab fa-instagram service-icon instagram"></i>
                 <h2>Instagram Followers</h2>
                 <div class="input-group">
-                    <input type="text" placeholder="Instagram Username">
+                    <input type="text" id="insta-username" placeholder="Instagram Username">
                 </div>
                 <div class="input-group">
-                    <input type="number" placeholder="Quantity (max 1000)">
+                    <input type="number" id="insta-quantity" placeholder="Quantity (max 1000)" min="1" max="1000">
                 </div>
-                <button>Get Free Followers</button>
+                <button id="free-insta-btn">Get Free Followers</button>
             </div>
 
             <!-- TikTok Service -->
@@ -139,12 +180,12 @@
                 <i class="fab fa-tiktok service-icon tiktok"></i>
                 <h2>TikTok Followers</h2>
                 <div class="input-group">
-                    <input type="text" placeholder="TikTok Username">
+                    <input type="text" id="tiktok-username" placeholder="TikTok Username">
                 </div>
                 <div class="input-group">
-                    <input type="number" placeholder="Quantity (max 1000)">
+                    <input type="number" id="tiktok-quantity" placeholder="Quantity (max 1000)" min="1" max="1000">
                 </div>
-                <button>Get Free Followers</button>
+                <button id="free-tiktok-btn">Get Free Followers</button>
             </div>
 
             <!-- Premium Services -->
@@ -152,20 +193,20 @@
                 <h2>Premium Boost</h2>
                 <p style="margin: 1rem 0;">Get instant delivery</p>
                 <div class="input-group">
-                    <select style="width: 100%; padding: 12px; border-radius: 8px;">
-                        <option>1000 Followers - TZS 6,000</option>
-                        <option>5000 Followers - TZS 2,500</option>
-                        <option>10,000 Followers - TZS 10,000</option>
+                    <select id="premium-package" style="width: 100%; padding: 12px; border-radius: 8px;">
+                        <option value="1000:10000">1000 Followers - TZS 6,000</option>
+                        <option value="5000:40000">5000 Followers - TZS 85,00</option>
+                        <option value="10000:75000">10,000 Followers - TZS 15,000</option>
                     </select>
                 </div>
-                <button style="background: #ff6b6b;">Buy Now</button>
+                <button id="premium-btn" style="background: #ff6b6b;" class="buy-btn" data-service="premium">Buy Now</button>
             </div>
         </div>
 
         <div class="payment-methods">
             <h3>Supported Payment Methods</h3>
             <div class="payment-icons">
-                <img src="m-pesa" alt="M-Pesa">
+                <img src="m-pesa.png" alt="M-Pesa">
                 <img src="yas.png" alt="Tigo Pesa">
                 <img src="air.png" alt="Airtel Money">
             </div>
@@ -177,11 +218,121 @@
         </div>
     </div>
 
-    <!-- Add your payment gateway integration here -->
-    <!-- You'll need to integrate with a Tanzanian payment gateway like:
-         - Vodacom M-Pesa
-         - Tigo Pesa
-         - Airtel Money
-         Consider using services like PayPal, Flutterwave, or local providers -->
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <h3>Complete Payment</h3>
+            <div class="input-group">
+                <label for="paymentPhone">Phone Number</label>
+                <input type="text" id="paymentPhone" placeholder="2557xxxxxxxx">
+            </div>
+            <div class="input-group">
+                <label for="paymentMethod">Payment Method</label>
+                <select id="paymentMethod">
+                    <option value="mpesa">M-Pesa</option>
+                    <option value="tigo">Tigo Pesa</option>
+                    <option value="airtel">Airtel Money</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="paymentAmount">Amount (TZS)</label>
+                <input type="text" id="paymentAmount" readonly>
+            </div>
+            <div class="input-group">
+                <label for="serviceType">Service</label>
+                <input type="text" id="serviceType" readonly>
+            </div>
+            <button id="confirmPayment" style="margin-top: 1rem;">Confirm Payment</button>
+            <button onclick="closePaymentModal()" class="close-modal">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        // Payment functionality
+        let currentService = '';
+        let currentAmount = 0;
+        
+        // Set up event listeners for buy buttons
+        document.querySelectorAll('.buy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                currentService = this.getAttribute('data-service');
+                
+                if (currentService === 'premium') {
+                    const packageValue = document.getElementById('premium-package').value;
+                    const [quantity, amount] = packageValue.split(':');
+                    currentAmount = parseInt(amount);
+                    document.getElementById('serviceType').value = `${quantity} Followers Package`;
+                }
+                
+                document.getElementById('paymentAmount').value = currentAmount.toLocaleString();
+                document.getElementById('paymentModal').style.display = 'flex';
+            });
+        });
+        
+        // Free service buttons
+        document.getElementById('free-insta-btn').addEventListener('click', function() {
+            const username = document.getElementById('insta-username').value;
+            const quantity = document.getElementById('insta-quantity').value;
+            
+            if (!username || !quantity) {
+                alert('Please enter your username and quantity');
+                return;
+            }
+            
+            alert(`Request received for ${quantity} Instagram followers for @${username}. This is a demo - no real followers will be added.`);
+        });
+        
+        document.getElementById('free-tiktok-btn').addEventListener('click', function() {
+            const username = document.getElementById('tiktok-username').value;
+            const quantity = document.getElementById('tiktok-quantity').value;
+            
+            if (!username || !quantity) {
+                alert('Please enter your username and quantity');
+                return;
+            }
+            
+            alert(`Request received for ${quantity} TikTok followers for @${username}. This is a demo - no real followers will be added.`);
+        });
+        
+        // Handle payment confirmation
+        document.getElementById('confirmPayment').addEventListener('click', function() {
+            const phone = document.getElementById('paymentPhone').value;
+            const method = document.getElementById('paymentMethod').value;
+            
+            if (!phone.match(/^2557[0-9]{8}$/)) {
+                alert('Please enter a valid Tanzanian phone number starting with 255');
+                return;
+            }
+            
+            // In a real implementation, this would call your backend API
+            alert(`Payment initiated via ${method.toUpperCase()} for TZS ${currentAmount.toLocaleString()}. Check your phone to complete payment.`);
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                alert('Payment successful! Your order is being processed.');
+                closePaymentModal();
+            }, 2000);
+        });
+        
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+        
+        // Simulated backend API calls (in a real app, these would be actual API calls)
+        async function initiateMpesaPayment(amount, phone, reference) {
+            console.log(`Simulating M-Pesa payment: ${amount} to ${phone} for ${reference}`);
+            // Actual implementation would use fetch() to your backend
+        }
+        
+        async function initiateTigoPayment(amount, phone, reference) {
+            console.log(`Simulating Tigo Pesa payment: ${amount} to ${phone} for ${reference}`);
+            // Actual implementation would use fetch() to your backend
+        }
+        
+        async function initiateAirtelPayment(amount, phone, reference) {
+            console.log(`Simulating Airtel Money payment: ${amount} to ${phone} for ${reference}`);
+            // Actual implementation would use fetch() to your backend
+        }
+    </script>
 </body>
 </html>
