@@ -3,376 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>45Tech -Services</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Social Boost - Free Followers & Likes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #6c5ce7;
-            --secondary: #a8a5e6;
-            --dark-bg: #1a1a1a;
-            --card-bg: #2d2d2d;
-            --input-bg: #3d3d3d;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Arial', sans-serif;
         }
 
         body {
-            background-color: var(--dark-bg);
-            color: #ffffff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-        }
-
-        header {
-            padding: 1.5rem;
-            background-color: var(--card-bg);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin-left: 2rem;
-            transition: color 0.3s ease;
-        }
-
-        nav a:hover {
-            color: var(--primary);
-        }
-
-        .domain-search {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
             padding: 2rem;
-            background-color: var(--card-bg);
-            margin: 20px auto;
-            border-radius: 12px;
-            max-width: 800px;
-            width: 90%;
         }
 
-        .search-form {
+        .container {
             width: 100%;
-            max-width: 600px;
-        }
-
-        .domain-input {
-            width: 100%;
-            padding: 1.2rem;
-            border: none;
-            border-radius: 8px;
-            background-color: var(--input-bg);
-            color: white;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        .pricing-container {
             max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 2rem;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .service-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .pricing-card {
-            background: var(--card-bg);
+        .service-card {
+            background: white;
+            border-radius: 15px;
             padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
         }
 
-        .login-section {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
+        .service-card:hover {
+            transform: translateY(-5px);
         }
 
-        .login-container {
-            background: var(--card-bg);
-            padding: 3rem;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 500px;
-            margin: 2rem;
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
 
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
+        .tiktok { color: #000000; }
+        .instagram { color: #E1306C; }
 
-        .premium-features {
-            display: none;
-            text-align: center;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .feature-card {
-            background: var(--input-bg);
-            padding: 2rem;
-            border-radius: 12px;
-            transition: transform 0.3s ease;
-        }
-
-        .tiktok-form {
-            margin-top: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .tiktok-input {
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid #4d4d4d;
-            background: var(--card-bg);
-            color: white;
-        }
-
-        .views-selector {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
+        .input-group {
             margin: 1rem 0;
         }
 
-        .views-option {
-            background: var(--input-bg);
-            padding: 0.5rem 1rem;
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
             border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 16px;
         }
 
-        .views-option.selected {
-            background: var(--primary);
-        }
-
-        .cta-button {
-            background-color: var(--primary);
+        button {
+            background: #4CAF50;
             color: white;
             border: none;
-            padding: 1rem 2rem;
+            padding: 15px 30px;
             border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.2s;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        .payment-methods {
+            margin-top: 2rem;
+            color: white;
+        }
+
+        .payment-icons img {
+            width: 60px;
+            margin: 10px;
+        }
+
+        .disclaimer {
+            color: white;
+            margin-top: 2rem;
+            font-size: 0.9em;
+            opacity: 0.8;
         }
 
         @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            nav a {
-                margin: 0 1rem;
+            .service-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="nav-container">
-            <div class="logo">45Tech</div>
-            <nav>
-                <a href="#pricing">Pricing</a>
-                <a href="#support">Support</a>
-                <a href="#login" id="loginLink">Login</a>
-            </nav>
-        </nav>
-    </header>
+    <div class="container">
+        <h1>Get Free Followers & Likes</h1>
+        
+        <div class="service-container">
+            <!-- Instagram Service -->
+            <div class="service-card">
+                <i class="fab fa-instagram service-icon instagram"></i>
+                <h2>Instagram Followers</h2>
+                <div class="input-group">
+                    <input type="text" placeholder="Instagram Username">
+                </div>
+                <div class="input-group">
+                    <input type="number" placeholder="Quantity (max 1000)">
+                </div>
+                <button>Get Free Followers</button>
+            </div>
 
-    <div class="domain-search">
-        <form class="search-form" id="domainForm">
-            <input type="text" class="domain-input" placeholder="" required>
-            <button type="submit" class="cta-button"></button>
-        </form>
-        <div class="domain-results" style="display: none;">
-            <h3></h3>
-            <p class="available" style="color: #51cf66; display: none;">
-                <i class="fas fa-check-circle"></i> 
-            </p>
-            <p class="taken" style="color: #ff6b6b; display: none;">
-                <i class="fas fa-times-circle"></i> 
-            </p>
+            <!-- TikTok Service -->
+            <div class="service-card">
+                <i class="fab fa-tiktok service-icon tiktok"></i>
+                <h2>TikTok Followers</h2>
+                <div class="input-group">
+                    <input type="text" placeholder="TikTok Username">
+                </div>
+                <div class="input-group">
+                    <input type="number" placeholder="Quantity (max 1000)">
+                </div>
+                <button>Get Free Followers</button>
+            </div>
+
+            <!-- Premium Services -->
+            <div class="service-card">
+                <h2>Premium Boost</h2>
+                <p style="margin: 1rem 0;">Get instant delivery</p>
+                <div class="input-group">
+                    <select style="width: 100%; padding: 12px; border-radius: 8px;">
+                        <option>1000 Followers - TZS 10,000</option>
+                        <option>5000 Followers - TZS 40,000</option>
+                        <option>10,000 Followers - TZS 75,000</option>
+                    </select>
+                </div>
+                <button style="background: #ff6b6b;">Buy Now</button>
+            </div>
+        </div>
+
+        <div class="payment-methods">
+            <h3>Supported Payment Methods</h3>
+            <div class="payment-icons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Vodacom_Logo.svg/1200px-Vodacom_Logo.svg.png" alt="M-Pesa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Tigo_Pesa_logo.svg/1280px-Tigo_Pesa_logo.svg.png" alt="Tigo Pesa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Airtel_Money_Logo.svg/2560px-Airtel_Money_Logo.svg.png" alt="Airtel Money">
+            </div>
+        </div>
+
+        <div class="disclaimer">
+            <p>Note: This service is not affiliated with Instagram or TikTok. All payments are secure and encrypted.</p>
+            <p style="margin-top: 1rem;">© 2025 45Tech. All rights reserved.</p>
         </div>
     </div>
 
-    <section class="login-section" id="login">
-        <div class="login-container">
-            <div class="login-form-container">
-                <h2 class="login-title">TikTok Access</h2>
-                <form class="login-form" id="loginForm">
-                    <div class="form-group">
-                        <input type="email" class="tiktok-input" placeholder="Email Address" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" class="tiktok-input" placeholder="Password" required>
-                    </div>
-                    <button type="submit" class="cta-button">Login</button>
-                </form>
-            </div>
-
-            <div class="premium-features" id="premiumFeatures">
-                <h2>TikTok Growth Services</h2>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <h3>Get Free Followers</h3>
-                        <div class="tiktok-form">
-                            <input type="number" class="tiktok-input" 
-                                  placeholder="Number of followers"
-                                  min="100" 
-                                  value="1000">
-                            <button class="cta-button" onclick="getFollowers()">
-                                Get Followers
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <h3>Get Video Views</h3>
-                        <div class="tiktok-form">
-                            <input type="url" class="tiktok-input" 
-                                  placeholder="Paste TikTok video URL"
-                                  pattern="https://(www\.|vm\.)?tiktok\.com/.+">
-                            <div class="views-selector">
-                                <div class="views-option selected" data-views="1000">1K</div>
-                                <div class="views-option" data-views="5000">5K</div>
-                                <div class="views-option" data-views="10000">10K</div>
-                            </div>
-                            <button class="cta-button" onclick="getViews()">
-                                Boost Views
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <button class="cta-button logout-btn" onclick="logout()">Logout</button>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        // Login System
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            document.querySelector('.login-form-container').style.display = 'none';
-            document.getElementById('premiumFeatures').style.display = 'block';
-        });
-
-        // TikTok Views System
-        let selectedViews = 1000;
-        
-        document.querySelectorAll('.views-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.views-option').forEach(opt => 
-                    opt.classList.remove('selected'));
-                this.classList.add('selected');
-                selectedViews = parseInt(this.dataset.views);
-            });
-        });
-
-        function isValidTikTokUrl(url) {
-            const pattern = /^(https?:\/\/)?(www\.|vm\.)?tiktok\.com\/.+/;
-            return pattern.test(url);
-        }
-
-        function getViews() {
-            const urlInput = document.querySelector('input[type="url"]');
-            if (!isValidTikTokUrl(urlInput.value)) {
-                alert('Please enter a valid TikTok URL!');
-                return;
-            }
-
-            showLoader();
-            setTimeout(() => {
-                hideLoader();
-                showSuccess(`Successfully added ${selectedViews} views to:\n${urlInput.value}`);
-            }, 2000);
-        }
-
-        function getFollowers() {
-            const countInput = document.querySelector('input[type="number"]');
-            if (countInput.value < 100) {
-                alert('Minimum 100 followers required!');
-                return;
-            }
-
-            showLoader();
-            setTimeout(() => {
-                hideLoader();
-                showSuccess(`Success! ${countInput.value} followers added`);
-            }, 2000);
-        }
-
-        function showLoader() {
-            document.body.classList.add('loading');
-        }
-
-        function hideLoader() {
-            document.body.classList.remove('loading');
-        }
-
-        function showSuccess(message) {
-            const alertDiv = document.createElement('div');
-            alertDiv.style.color = '#51cf66';
-            alertDiv.style.margin = '1rem 0';
-            alertDiv.innerHTML = `
-                <i class="fas fa-check-circle"></i> ${message}
-            `;
-            document.querySelector('.feature-grid').prepend(alertDiv);
-            setTimeout(() => alertDiv.remove(), 5000);
-        }
-
-        function logout() {
-            document.querySelector('.login-form-container').style.display = 'block';
-            document.getElementById('premiumFeatures').style.display = 'none';
-        }
-
-        // Domain Check Simulation
-        document.getElementById('domainForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const results = document.querySelector('.domain-results');
-            results.style.display = 'block';
-            const available = Math.random() > 0.5;
-            document.querySelector('.available').style.display = available ? 'block' : 'none';
-            document.querySelector('.taken').style.display = !available ? 'block' : 'none';
-        });
-    </script>
+    <!-- Add your payment gateway integration here -->
+    <!-- You'll need to integrate with a Tanzanian payment gateway like:
+         - Vodacom M-Pesa
+         - Tigo Pesa
+         - Airtel Money
+         Consider using services like PayPal, Flutterwave, or local providers -->
 </body>
 </html>
